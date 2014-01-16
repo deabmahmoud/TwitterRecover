@@ -17,15 +17,28 @@ or
 
 to get and send message using Twitter API
 
-Take me (@vancexu) as an example,
+Take me (@vancexu) as an example, the following code remove all my 300+ followings in 1 minutes.
 
     get_url = 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&screen_name=vancexu'
     r = requests.get(url=get_url, auth=oauth)
     res = r.json()
     ids = res['ids'] # get the ids of who I followed
     post_url = 'https://api.twitter.com/1.1/friendships/destroy.json'
-    # each post request will delete one id I followed
     for id in ids:
+        # each post request will delete one id I followed
         requests.post(url=post_url, auth=oauth, data={'user_id': str(id)}
 
+The following code remove 200 of my tweets one time
 
+    get_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=vancexu&count=500'
+    r = requests.get(url=get_url, auth=oauth)
+    res = r.json()
+    ids = []
+    # get all tweets' ids
+    for i in res:
+        ids.append(i['id_str'])
+
+    post_url = 'https://api.twitter.com/1.1/statuses/destroy/'
+    for i in ids:
+        # remove one tweet at a time, according to the given tweet id.
+        requests.post(url=post_url+i+'.json', auth=oauth)
