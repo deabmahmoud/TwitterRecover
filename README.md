@@ -4,10 +4,10 @@ He tweeted 500+ messages in Russian with links,
 
 So I have to remove all my tweets and clean my following list.
 
-First, setup the application in Twitter, and use the scripts to get oauth.
+First, [create an application](https://dev.twitter.com/docs) in Twitter, and use the scripts to get oauth. The script requires [requests](https://github.com/kennethreitz/requests/) along with [requests-oauthlib](https://github.com/requests/requests-oauthlib).
 
 After you: `oauth = get_oauth()`
-you do use 
+you can use 
 
     requests.get(url=get_url, auth=oauth)
 
@@ -42,3 +42,5 @@ The following code remove 200 of my tweets one time
     for i in ids:
         # remove one tweet at a time, according to the given tweet id.
         requests.post(url=post_url+i+'.json', auth=oauth)
+
+reference: http://thomassileo.com/blog/2013/01/25/using-twitter-rest-api-v1-dot-1-with-python/
